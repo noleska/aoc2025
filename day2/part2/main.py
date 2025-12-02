@@ -8,27 +8,28 @@ with open('input.txt','r') as f:
     idranges = f.readline().split(',')
 
 
-def intervals(x):
+def divisors(x):
     # find whole-number divisors of char len of input
     sx = str(x)
-    intervals = [1]
+    divisors = [1]
     for i in range (2,int(len(sx)/2)+1):
         if int(len(sx)) % i == 0:
-            intervals.append(i)
-    return intervals
+            divisors.append(i)
+    #print(len(str(x)),divisors)
+    return divisors
 
 
-def split_by_intervals(x):
+def split_by_divisors(x):
     ''' split a number string into all possible equally divided (by character number) sets
         and return those sets as a list of lists of strings
     ''' 
     sx = str(x)
     ref_index_sets = []
-    for interval in intervals(x):
+    for divisor in divisors(x):
         ref_indices = []
-        num_of_subsets = int(len(sx)/interval)
+        num_of_subsets = int(len(sx)/divisor)
         for i in range(0,num_of_subsets):
-            ref_indices.append([i*interval,(i*interval)+interval])
+            ref_indices.append([i*divisor,(i*divisor)+divisor])
         ref_index_sets.append(ref_indices)
 
     out = []
@@ -36,6 +37,7 @@ def split_by_intervals(x):
         this_set = []
         for slc in ref_set:
             this_set.append(sx[slc[0]:slc[1]])
+        #print(str(x),len(str(x)),divisors(x),'\n',this_set)
         out.append(this_set)
     return out
 
@@ -44,15 +46,14 @@ def value_if_invalid(x:int):
     sx = str(x) # string ver for char indexing
     if len(sx) < 2: # a single-digit number can't contain repeats
         return 0
-    value_sets = split_by_intervals(x)
-    for vset in value_sets:
-        test_val = vset[0]
-        for val in vset:
-            if test_val != val:
-                return 0
-    return x
+    value_sets = split_by_divisors(x)
+    for value_set in value_sets:
+        if len(set(value_set)) <= 1:
+            print(x)
+            return x
+    return 0
 
-    
+
 sum_of_invalid_ids = 0
 for idrange in idranges:
     splitstr = idrange.split('-')
