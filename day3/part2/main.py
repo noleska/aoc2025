@@ -20,7 +20,6 @@ for input_value in input_values_list:
         for num in numlist:
             batt_array.add_cell(battery.Cell(int(num)))
     batt_array.turn_on_max_jolt_cells(12)
-    print("batt_joltage:", batt_array.report_joltage())
     total_joltage += batt_array.report_joltage()
     
 

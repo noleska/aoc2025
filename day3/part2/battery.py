@@ -8,9 +8,6 @@ class Cell:
     
     def is_turned_on(self):
         return self.turned_on
-    
-    def __repr__(self):
-        return(self.jolt, self.turned_on)
 
 
 class Array:
@@ -30,13 +27,10 @@ class Array:
             last_index = num_to_turn_on - ntto 
             working_array = self.cells[last_cell_index_turned_on:-last_index+1]
             wa_jolts = [x.jolt for x in working_array]
-            print("wa_jolts:", wa_jolts, -last_index)
             wa_max_jolt = max(wa_jolts)
             max_jolt_cell_index = wa_jolts.index(wa_max_jolt) + last_cell_index_turned_on 
-            print("max_jolt_cell_index", max_jolt_cell_index)
             self.cells[max_jolt_cell_index].turn_on()
             last_cell_index_turned_on = max_jolt_cell_index + 1
-            print([x.jolt for x in self.cells if x.turned_on == True])
         # weird base case because you can't iterate last index to zero
         working_array = self.cells[last_cell_index_turned_on:]
         wa_jolts = [x.jolt for x in working_array]
